@@ -1,24 +1,38 @@
 import machine
 import time
 
-led_pin = machine.Pin(23, machine.Pin.OUT)
-#pin2 = machine.Pin(22,machine.Pin.OUT)
-boton = machine.Pin(21, machine.Pin.IN)
-led_pin.value(0)
-print("asdjasdkljasl",boton.value())
+
+pin_rojo = machine.Pin(23, machine.Pin.OUT)
+pin_verde = machine.Pin(22, machine.Pin.OUT)
+boton = machine.Pin(21, machine.Pin.IN, machine.Pin.PULL_DOWN)
+pin_rojo.value(0)
+pin_verde.value(0)
+
+boton.value(0)
+peso = 10
+frutos_secos = ["mani", "nueces", "almendras"]
+fruto = 0
+
+
 while True:
     val = boton.value()
-    print("VAL ANTES",val)
+    print("boton", val)
+    
+    print(frutos_secos[fruto])
+    if not val:
+        pressed = True
+        pin_rojo.value(1)
+        print("hola")
+        time.sleep(1)
+        fruto += 1
+        if fruto == 3:
+            fruto = 0
+        boton.value(0)
     time.sleep(1)
-    if val:
-        print("VAL DP",val)
-        led_pin.value(1)
-        print("LED ON")
-        time.sleep(2)
-    else:
-        led_pin.value(0)
-        #if not val:
-        #    led_pin.value(0)
-        #    print("LED OFF")
-        #    time.sleep(2)
-    #led_pin.value(0)
+
+    # if peso <= 20:
+    #     pin_rojo.value(1)
+    #     pin_verde.value(0)
+    # elif peso >= 21:
+    #     pin_verde.value(1)
+    #     pin_rojo.value(0)
