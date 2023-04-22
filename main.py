@@ -15,14 +15,19 @@ fruto = 0
 
 
 while True:
+    if peso <= 20:
+        pin_rojo.value(1)
+        pin_verde.value(0)
+    elif peso >= 21:
+        pin_verde.value(1)
+        pin_rojo.value(0)
+
     val = boton.value()
 
     if val:
         print(fruto)  
         print(frutos_secos[fruto])
-        print("boton dpes", val)
         pressed = True
-        pin_rojo.value(1)
         print("hola")
         time.sleep(0.1)
         fruto += 1
@@ -30,10 +35,3 @@ while True:
             fruto = 0
         boton.value(0)
     time.sleep(0.1)
-
-    # if peso <= 20:
-    #     pin_rojo.value(1)
-    #     pin_verde.value(0)
-    # elif peso >= 21:
-    #     pin_verde.value(1)
-    #     pin_rojo.value(0)
