@@ -1,34 +1,33 @@
 import machine
 import time
+from machine import SoftI2C
+from lcd_api import LcdApi
+from i2c_lcd import I2cLcd
 
-
-pin_rojo = machine.Pin(23, machine.Pin.OUT)
-pin_verde = machine.Pin(22, machine.Pin.OUT)
-boton = machine.Pin(21, machine.Pin.IN)
-pin_rojo.value(0)
+pin_verde = machine.Pin(27, machine.Pin.OUT)
+boton = machine.Pin(25, machine.Pin.IN)
 pin_verde.value(0)
 
 boton.value(0)
-peso = 10
-frutos_secos = ["mani", "nueces", "almendras"]
+frutos_secos = ["Mani", "Nueces", "Almendras"]
 fruto = 0
 
+I2C_ADDR = 0x27
+totalRows = 2
+totalColumns = 16
+
+i2c = SoftI2C(scl=machine.Pin(21), sda=machine.Pin(22), freq=10000)
+lcd = I2cLcd(i2c, I2C_ADDR, totalRows, totalColumns)
 
 while True:
-    if peso <= 20:
-        pin_rojo.value(1)
-        pin_verde.value(0)
-    elif peso >= 21:
-        pin_verde.value(1)
-        pin_rojo.value(0)
-
     val = boton.value()
 
     if val:
-        print(fruto)  
+        print(fruto)
+        lcd.clear()
         print(frutos_secos[fruto])
-        pressed = True
-        print("hola")
+        lcd.putstr(frutos_secos[fruto])
+        pin_verde.value(1)
         time.sleep(0.1)
         fruto += 1
         if fruto == 3:
