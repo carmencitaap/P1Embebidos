@@ -11,7 +11,8 @@ def drop_current(fruto,dict):
     elif fruto == "Nueces":
         return dict["Nueces"][0], dict["Nueces"][1]
     elif fruto == "Almendras":
-        return dict["Almendras"][0], dict["Almendras"][0]
+        # print("almendraaaaaaaaaaaaaaaaaaa")
+        return dict["Almendras"][0], dict["Almendras"][1]
 
 led_verde = machine.Pin(27, machine.Pin.OUT)
 led_rojo = machine.Pin(23,machine.Pin.OUT)
@@ -24,12 +25,14 @@ motor2 = machine.Pin(2,machine.Pin.OUT)
 motor3 = machine.Pin(4,machine.Pin.OUT)
 motor4 = machine.Pin(5,machine.Pin.OUT)
 
+sensor = machine.Pin(34,machine.Pin.IN)
+
 led_verde.value(0)
 led_rojo.value(0)
 
 boton.value(0)
 frutos_secos = ["Mani", "Nueces", "Almendras"]
-caida = {"Mani":[65,3],"Nueces":[65,0],"Almendras":[65,5]}
+caida = {"Mani":[65,3],"Nueces":[65,3],"Almendras":[65,2]}
 fruto = 0
 
 I2C_ADDR = 0x27
@@ -54,12 +57,21 @@ while True:
     time.sleep(0.1)
 
     if boton_drop.value():
-        led_rojo.value(1)
         angle,delay = drop_current(current,caida)
+        # print(angle,delay)
         s1 = create(motor1,motor2,motor3,motor4,delay)
         s1.step(1,1)
         s1.angle(angle)
         s1.step(1,-1)
         s1.angle(angle,-1)
         boton_drop.value(0)
+    
+    if sensor.value(): #no apunta a nada
+        # print("value",sensor.value())
+        led_rojo.value(1)
+        led_verde.value(0)
+    else: # apunta a algo
+        led_verde.value(1)
+        led_rojo.value(0)
+
     time.sleep(0.1)
