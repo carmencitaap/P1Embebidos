@@ -57,14 +57,16 @@ while True:
     time.sleep(0.1)
 
     if boton_drop.value():
-        angle,delay = drop_current(current,caida)
-        # print(angle,delay)
-        s1 = create(motor1,motor2,motor3,motor4,delay)
-        s1.step(1,1)
-        s1.angle(angle)
-        s1.step(1,-1)
-        s1.angle(angle,-1)
-        boton_drop.value(0)
+        try:
+            angle,delay = drop_current(current,caida)
+            s1 = create(motor1,motor2,motor3,motor4,delay)
+            s1.step(1,1)
+            s1.angle(angle)
+            s1.step(1,-1)
+            s1.angle(angle,-1)
+            boton_drop.value(0)
+        except NameError:
+            pass    
     
     if sensor.value(): #no apunta a nada
         # print("value",sensor.value())
