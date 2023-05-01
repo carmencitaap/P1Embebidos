@@ -11,7 +11,6 @@ def drop_current(fruto,dict):
     elif fruto == "Nueces":
         return dict["Nueces"][0], dict["Nueces"][1]
     elif fruto == "Almendras":
-        # print("almendraaaaaaaaaaaaaaaaaaa")
         return dict["Almendras"][0], dict["Almendras"][1]
 
 led_verde = machine.Pin(27, machine.Pin.OUT)
@@ -69,7 +68,6 @@ while True:
             pass    
     
     if sensor.value(): #no apunta a nada
-        # print("value",sensor.value())
         led_rojo.value(1)
         led_verde.value(0)
     else: # apunta a algo
