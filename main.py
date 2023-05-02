@@ -39,9 +39,10 @@ led_rojo.value(0)
 
 boton.value(0)
 frutos_secos = ["Mani", "Nueces", "Almendras"]
-caida = {"Mani":[134,1],"Nueces":[360,2],"Almendras":[360,4]}
+caida = {"Mani":[130,1],"Nueces":[360,2],"Almendras":[360,4]} #diccionario con [0] angulo y [1] delay
 fruto = 0
 
+#LCD
 I2C_ADDR = 0x27
 totalRows = 2
 totalColumns = 16
@@ -51,7 +52,7 @@ lcd = I2cLcd(i2c, I2C_ADDR, totalRows, totalColumns)
 
 while True:
     val = boton.value()
-    if val:
+    if val: # boton para cambiar el fruto seco
         lcd.clear()
         current = frutos_secos[fruto]
         lcd.putstr(frutos_secos[fruto])
@@ -65,15 +66,15 @@ while True:
 
     if boton_drop.value():
         try:
-            angle,delay = drop_current(current,caida)
-            print("antesss", caida["Mani"][1])
-            s1 = create(motor1,motor2,motor3,motor4,delay)
+            angle,delay = drop_current(current,caida) # si apreto el boton
+#             print("antesss", caida["Mani"][1])
+            s1 = create(motor1,motor2,motor3,motor4,delay) #creo un motor con el delay que corresponda al fruto seco que está seleccionado.
             s1.reset()
             s1.step(1,1)
-            s1.angle(angle)
+            s1.angle(angle) #ver si da vuelta completa 
 #             time.sleep(0.009)
-            s1.step(1,-1)
-            s1.angle(angle,-1)
+#             s1.step(1,-1)
+#             s1.angle(angle,-1)
             boton_drop.value(0)
         except NameError:
             pass    
