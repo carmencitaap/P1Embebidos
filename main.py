@@ -13,9 +13,9 @@ def drop_current(fruto,dic):
     elif fruto == "Almendras":
         return dic["Almendras"][0], dic["Almendras"][1]
 
-def change_delay(fruto,dic):
-    if fruto == "Mani":
-        dic["Mani"][1] = 4
+# def change_delay(fruto,dic):
+#     if fruto == "Mani":
+#         dic["Mani"][1] = 4
     #elif fruto == "Nueces":
     #    return dic["Nueces"][0], dic["Nueces"][1]
     #elif fruto == "Almendras":
@@ -66,12 +66,10 @@ while True:
 
     if boton_drop.value():
         try:
-            print("holaaaaaaaa")
             angle,delay = drop_current(current,caida) # si apreto el boton
             s1 = create(motor1,motor2,motor3,motor4,delay) #creo un motor con el delay que corresponda al fruto seco que está seleccionado.
-            print("reset")
             s1.reset()
-            print("reseted")
+
             if current == "Almendras":
                 s1.step(1,1)
                 s1.angle(angle) #ver si da vuelta completa
@@ -79,11 +77,9 @@ while True:
                 s1.step(1,1)
                 s1.angle(angle)
             elif current == "Mani":
-                print("entró")
                 s1.step(1,1)
-                print("gira???")
                 s1.angle(angle)
-                print("aaaaaaaaaaaaaaaaaa")
+
             else:
                  s1.step(1,1)
                  s1.angle(angle,1)
