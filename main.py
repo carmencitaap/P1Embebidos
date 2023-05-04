@@ -39,7 +39,7 @@ led_rojo.value(0)
 
 boton.value(0)
 frutos_secos = ["Mani", "Nueces", "Almendras"]
-caida = {"Mani":[130,1],"Nueces":[360,2],"Almendras":[360,4]} #diccionario con [0] angulo y [1] delay
+caida = {"Mani":[360,1],"Nueces":[180,4],"Almendras":[180,1]} #diccionario con [0] angulo y [1] delay
 fruto = 0
 
 #LCD
@@ -66,16 +66,33 @@ while True:
 
     if boton_drop.value():
         try:
+            print("holaaaaaaaa")
             angle,delay = drop_current(current,caida) # si apreto el boton
-#             print("antesss", caida["Mani"][1])
             s1 = create(motor1,motor2,motor3,motor4,delay) #creo un motor con el delay que corresponda al fruto seco que está seleccionado.
+            print("reset")
             s1.reset()
-            s1.step(1,1)
-            s1.angle(angle) #ver si da vuelta completa 
-#             time.sleep(0.009)
-#             s1.step(1,-1)
-#             s1.angle(angle,-1)
+            print("reseted")
+            if current == "Almendras":
+                s1.step(1,1)
+                s1.angle(angle) #ver si da vuelta completa
+                time.sleep(0.3)
+                s1.step(1,1)
+                s1.angle(angle)
+            elif current == "Mani":
+                print("entró")
+                s1.step(1,1)
+                print("gira???")
+                s1.angle(angle)
+                print("aaaaaaaaaaaaaaaaaa")
+            else:
+                 s1.step(1,1)
+                 s1.angle(angle,1)
+                 s1.step(1,-1)
+                 s1.angle(angle,-1)
+                 s1.step(1,1)
+                 s1.angle(angle)
             boton_drop.value(0)
+            
         except NameError:
             pass    
     
@@ -83,15 +100,8 @@ while True:
         led_rojo.value(1)
         led_verde.value(0)
         
-#         try:
-#             change_delay(current,caida)
-#             #print(" despues", caida["Mani"][1])
-#         except NameError:
-#             pass
-        
     else: # apunta a algo
         led_verde.value(1)
         led_rojo.value(0)
-       # print("antesss", caida["Mani"][1])
 
     time.sleep(0.1)
